@@ -1,14 +1,6 @@
 <?php
-function include_all_php($folder){
-    foreach (glob("{$folder}/*.php") as $filename)
-    {
-        require_once $filename;
-    }
-}
-
-include_all_php("library/VMware/VCloud/");
-include_all_php("library/VMware/VCloud/Http");
-include_all_php("library/VMware/VCloud/Query");
+include_once("library/VMware/VCloud/Admin.php");
+include_once("library/VMware/VCloud/Service.php");
 class AdminController
 {
    function __construct($s,$u,$p)
@@ -17,7 +9,7 @@ class AdminController
       $this->user=$u;
       $this->pswd=$p;
       $this->service=NULL;
-      $this->methodMaps=array("getRoles" => "get_name"); // Need to add sub methods if objects are printed for any method 
+      $this->methodMaps=array("getRoles" => "get_name","getRights" => "get_name"); // Need to add sub methods if objects are printed for any method 
    }
    function validateMethod($m)
    {
@@ -62,22 +54,22 @@ if($task=="Admin")
         foreach($SDK_AdminObj->$method() as $obj)
         {
            $subMethod=$adminController->methodMaps[$method];
-           array_push($temp_arr,$obj->$subMethod()); // for methods like VMware_VCloud_SDK_Admin::getRoles
+           array_push($temp_arr,$obj->$subMethod()); // for methods like VMware_VCloud_SDK_Admin::getRoles() and  VMware_VCloud_SDK_Admin::getRights()
         }
         print json_encode($temp_arr);
       }
       else{
-        print json_encode($result); // for method like VMware_VCloud_SDK_Admin::getRights()
+        print json_encode($result); 
       }
    }
    else {
     if(array_key_exists("sub_method", $_REQUEST) && $_REQUEST["sub_method"]!="")
     {
       $sub_method=$_REQUEST["sub_method"];
-      print $result->$sub_method()->export(); // for methods like VMware_VCloud_SDK_Admin::getSystemOrg 
+      print json_encode($result->$sub_method()->export()); // for methods like VMware_VCloud_SDK_Admin::getSystemOrg() 
     }
     else
-      print $result->get_name();
+      print json_encode($result->get_name());
    }
 }
 

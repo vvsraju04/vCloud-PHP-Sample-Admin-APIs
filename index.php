@@ -12,7 +12,7 @@
 </head> 
 <body>
 <div class="ui container segment">
-    <h2 class="ui row header">vCloud Sample Adminstator </h2>
+    <h2 class="ui row header">vCloud Director Sample Admin API Console </h2>
     <div class="ui divider"></div>
     <div class="ui row compact message" id="msg">
       <b>Welcome</b> ! Enter vCloud Director server IP/hostname , login username an password <!-- with certificate (if any )-->
