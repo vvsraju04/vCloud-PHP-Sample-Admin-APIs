@@ -1,7 +1,7 @@
 <?php
 include_once("library/VMware/VCloud/Admin.php");
 include_once("library/VMware/VCloud/Service.php");
-class AdminController
+class   AdminController
 {
    function __construct($s,$u,$p)
    {
